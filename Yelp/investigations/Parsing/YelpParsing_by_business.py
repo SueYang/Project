@@ -68,7 +68,7 @@ def top5_bigram_collocations(text):
     :return:
     """
     finder = BigramCollocationFinder.from_words(text)
-    finder.apply_freq_filter(1)
+    finder.apply_freq_filter(5)
     bigrams = finder.nbest(bigram_measures.pmi, 5)
     return bigrams
 
@@ -79,7 +79,7 @@ def top5_trigram_collocations(text):
     :return:
     """
     finder = TrigramCollocationFinder.from_words(text)
-    finder.apply_freq_filter(1)
+    finder.apply_freq_filter(5)
     trigrams = finder.nbest(trigram_measures.pmi, 5)
     return trigrams
 
