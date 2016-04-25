@@ -22,15 +22,19 @@ from pyspark.sql.types import StringType
 bigram_measures = nltk.collocations.BigramAssocMeasures()
 trigram_measures = nltk.collocations.TrigramAssocMeasures()
 
+print("start")
 sc = SparkContext()
 sqlContext = HiveContext(sc)
+print("test")
 # Read in the train and test data
-rdd_reviews = sqlContext.sql("select business_id,text from review limit 200").rdd
+rdd_reviews = sqlContext.sql("select business_id,text from review limit 10").rdd
+print("done query")
 df_reviews = rdd_reviews.groupByKey().toDF()
 pd_df_reviews = df_reviews.toPandas()
 # Drop columns: Description, Resolution, and Address
 #df_train.drop(['Descript', 'Resolution','Address'], axis=1, inplace=True)
 #df_test.drop(['Address'], axis=1, inplace=True)
+print("done conversion")
 
 cachedStopWords = set(nltk.corpus.stopwords.words('english'))
 #add custom words
@@ -113,6 +117,6 @@ for index, row in pd_df_reviews.iterrows():
 spark_df = sqlContext.createDataFrame(df, columns)
 
 # Save it as a table
-spark_df.registerTempTable("dfBusinessTest")
+spark_df.registerTempTable("dfBusinessTest2")
 sqlContext.sql("drop table if exists test")
-sqlContext.sql("CREATE TABLE test AS SELECT * FROM dfBusinessTest")
+sqlContext.sql("CREATE TABLE test AS SELECT * FROM dfBusinessTest2")

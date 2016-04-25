@@ -22,7 +22,7 @@ trigram_measures = nltk.collocations.TrigramAssocMeasures()
 sc = SparkContext()
 sqlContext = HiveContext(sc)
 # Read in the train and test data
-rdd_reviews = sqlContext.sql("select business_state,cleantext from fullResult_byBusiness").rdd
+rdd_reviews = sqlContext.sql("select business_state,cleantext from fullResult2_byBusiness").rdd
 df_reviews = rdd_reviews.groupByKey().toDF()
 pd_df_reviews = df_reviews.toPandas()
 
@@ -32,9 +32,11 @@ pd_df_reviews = df_reviews.toPandas()
 
 cachedStopWords = set(nltk.corpus.stopwords.words('english'))
 #add custom words
+cachedStopWords = set(nltk.corpus.stopwords.words('english'))
+#add custom words
 cachedStopWords.update(('and','I','A','And','So','arnt','This','When','It','many','Many','so','cant','Yes','yes','No','no','These','these',
                         'ago','also','want','always','very','absolutely','absolute','actually','finally','possible','possibly','anything','anytime',
-                        'im','become','able','said','every','each'))
+                        'im','become','able','said','every','each','go','good','great','awesome','food','best','place','location','food','try','love','staff','pei','wei','order','ok','okay','people','hard','cook','get','ended'))
 def cleanText(text):
     """
     removes punctuation, stopwords, numbers and returns lowercase text in a list of single words
@@ -109,5 +111,5 @@ for index, row in pd_df_reviews.iterrows():
 spark_df = sqlContext.createDataFrame(df, columns)
 # Save it as a table
 spark_df.registerTempTable("dfState")
-sqlContext.sql("drop table if exists result_byState")
-sqlContext.sql("CREATE TABLE result_byState AS SELECT * FROM dfState")
+sqlContext.sql("drop table if exists result2_byState")
+sqlContext.sql("CREATE TABLE result2_byState AS SELECT * FROM dfState")
