@@ -36,7 +36,7 @@ cachedStopWords = set(nltk.corpus.stopwords.words('english'))
 #add custom words
 cachedStopWords.update(('and','I','A','And','So','arnt','This','When','It','many','Many','so','cant','Yes','yes','No','no','These','these',
                         'ago','also','want','always','very','absolutely','absolute','actually','finally','possible','possibly','anything','anytime',
-                        'im','become','able','said','every','each'))
+                        'im','become','able','said','every','each','go','good','great','awesome','food','best','place','location','food','try','love','staff','pei','wei','order','ok','okay','people','hard','cook','get','ended'))
 def cleanText(text):
     """
     removes punctuation, stopwords, numbers and returns lowercase text in a list of single words
