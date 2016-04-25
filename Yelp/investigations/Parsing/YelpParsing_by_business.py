@@ -116,5 +116,7 @@ spark_df = sqlContext.createDataFrame(df, columns)
 
 # Save it as a table
 spark_df.registerTempTable("dfBusiness500000")
+
 sqlContext.sql("drop table if exists result2_bybusiness")
 sqlContext.sql("CREATE TABLE result2_bybusiness AS SELECT * FROM dfBusiness500000")
+
